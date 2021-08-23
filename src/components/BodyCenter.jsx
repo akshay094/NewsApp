@@ -13,11 +13,14 @@ const BodyCenter = () => {
   let [country, setCountry] = useState('in')
   let [q, setQ] = useState('spacex')
   let [sortBy, setSortBy] = useState('popularity')
-  let [page, setPage] = useState(2)
+  let [page, setPage] = useState(1)
 
   const sortByArr = ['relevancy', 'popularity', 'publishedAt']
-  const countryArr = ['in', 'us', 'cn', 'ca', 'is', 'nz', 'kr', 'au', 'fr', 'de', 'ru', 'jp']
+
+  const countryArr = { India: 'in', USA: 'us', China: 'cn', Canada: 'ca', Israel: 'is', 'New Zealand': 'nz', 'South Korea': 'kr', Australia: 'au', France: 'fr', Germany: 'de', Russia: 'ru', Japan: 'jp' }
+
   const headlineArr = ['top-headlines', 'everything']
+
   const categoryArr = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology']
 
   let date = new Date();
@@ -53,9 +56,11 @@ const BodyCenter = () => {
     sendReq();
   }, [country, category, page]);
 
-
   return (
-    <></>
+    <>
+      <Selector name="Country" list={countryArr} selection={setCountry} value={country} />
+      <Selector name="Category" list={categoryArr} selection={setCategory} value={category} />
+    </>
   )
 }
 
