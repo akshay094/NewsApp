@@ -115,28 +115,18 @@ const BodyCenter = () => {
           </Box>
         </Grid>
         {
-          topHeadData.map((item, index) => {
+          topHeadData.filter((data) => data.urlToImage).map((item, index) => {
             return (
-              <Grid item xs={12}>
-                <img src={item.urlToImage} alt="No Pic Found" />
-                <Box m={3}>
-                  {item.author ? <Typography variant="h4" m={2}>Source : {item.author}</Typography> : <Typography variant="h4" m={2}>Source : Global</Typography>}
-                </Box>
-                <Box m={3}>
-                  <Typography variant="h6" m={2}>{item.description}</Typography>
-                </Box>
-                <Box m={3}>
-                  <Typography variant="h6" m={2}>{item.publishedAt.slice(0, 10)}</Typography>
-                </Box>
-                <Box m={3}>
-                  <Typography variant="p">
-                    <a target="_blank" href={item.url}>Read Full Story Here</a></Typography>
+              <Grid item xs={12} key={index}>
+                <Box key={index} display="flex" alignItems="center" justifyContent="center" m={3} p={1}>
+                  <ImgMediaCard key={index} img={item.urlToImage} title={item.title} url={item.url} date={item.publishedAt.slice(0, 10)} description={item.content} />
                 </Box>
               </Grid>
             )
-          })
-
+          }
+          )
         }
+
       </Grid>
 
       {/* Pagination Component Start*/}
@@ -149,9 +139,7 @@ const BodyCenter = () => {
       </Grid>
       {/* Pagination Component End*/}
 
-      <Box display="flex" alignItems="center" justifyContent="center" m={3} p={1}>
-        <ImgMediaCard url title date />
-      </Box>
+
     </>
   )
 }
