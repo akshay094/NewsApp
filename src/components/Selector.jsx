@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import Box from '@material-ui/core/Box';
-import { Container, Grid, Button, Select, FormControl, MenuItem, InputLabel } from '@material-ui/core';
+import { Select, FormControl, MenuItem, InputLabel } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { EmojiObjects } from '@material-ui/icons';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,26 +24,24 @@ const Selector = ({ name, list, selection, value }) => {
   };
 
   return (
-    <Box variant="div">
-      <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">{name}</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={value}
-          onChange={handleChange}
-        >
-          {
-            Array.isArray(list) ? (
-              list.map((item, index) => {
-                return <MenuItem key={index} value={item}>{item}</MenuItem>
-              })) : Object.keys(list).map((item, index) => {
-                return <MenuItem key={index} value={list[item]}>{item}</MenuItem>
-              })
-          }
-        </Select>
-      </FormControl>
-    </Box >
+    <FormControl variant="outlined" className={classes.formControl}>
+      <InputLabel id="demo-simple-select-outlined-label"></InputLabel>
+      <Select
+        labelId="demo-simple-select-outlined-label"
+        id="demo-simple-select-outlined"
+        value={value}
+        onChange={handleChange}
+      >
+        {
+          Array.isArray(list) ? (
+            list.map((item, index) => {
+              return <MenuItem key={index} value={item}>{item}</MenuItem>
+            })) : Object.keys(list).map((item, index) => {
+              return <MenuItem key={index} value={list[item]}>{item}</MenuItem>
+            })
+        }
+      </Select>
+    </FormControl>
   )
 }
 
