@@ -86,9 +86,6 @@ const BodyCenter = () => {
     sendReq();
   }, [country, category, page]);
 
-  useEffect(() => {
-    setPage(1)
-  }, [country, category])
 
   return (
     <>

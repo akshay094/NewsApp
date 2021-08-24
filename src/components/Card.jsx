@@ -24,7 +24,7 @@ export default function ImgMediaCard({ img, title, url, date, description }) {
           component="img"
           alt="No Media On Server"
           image={img}
-          height="450"
+          height="350"
           title={title}
         />
         <CardContent>
