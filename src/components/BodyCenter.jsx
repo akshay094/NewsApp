@@ -7,7 +7,10 @@ import { Link } from 'react-router-dom';
 import { Pagination } from '@material-ui/lab';
 import ImgMediaCard from './Card'
 
+
 const API_KEY = `${process.env.REACT_APP_API_KEY}`;
+
+const proxyUrl = "https://cors-anywhere.herokuapp.com/";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +36,7 @@ const BodyCenter = () => {
 
   let [topHeadData, setTopHeadData] = useState([]);
 
-  let [category, setCategory] = useState('general')
+  let [category, setCategory] = useState('top')
   let [country, setCountry] = useState('in')
   let [q, setQ] = useState('spacex')
   let [sortBy, setSortBy] = useState('popularity')
@@ -41,11 +44,11 @@ const BodyCenter = () => {
   let [totalPages, setTotalPages] = useState(10);
   const sortByArr = ['relevancy', 'popularity', 'publishedAt']
 
-  const countryArr = { India: 'in', USA: 'us', China: 'cn', Canada: 'ca', Israel: 'is', 'New Zealand': 'nz', 'South Korea': 'kr', Australia: 'au', France: 'fr', Germany: 'de', Russia: 'ru', Japan: 'jp' }
+  const countryArr = { India: 'in', USA: 'us', Canada: 'ca', Australia: 'au', Japan: 'jp' }
 
   const headlineArr = ['top-headlines', 'everything']
 
-  const categoryArr = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology']
+  const categoryArr = ['business', 'entertainment', 'top', 'health', 'science', 'sports', 'technology']
 
   let date = new Date();
   let dateStr = date.getFullYear() + date.getMonth() + date.getDate();
@@ -59,15 +62,15 @@ const BodyCenter = () => {
 
     const ever = {
       method: 'GET',
-      url: `https://newsapi.org/v2/everything?q=${q}&from=${dateStr}&to=${dateStr}&sortBy=${sortBy}&pageSize=10&page=${page}&apiKey=${API_KEY}`,
+      url: ``,
       headers: {
         accept: 'application/json',
       }
     };
-
+    // https://newsdata.io/api/1/sources?country=${country}&category=${category}&language=en&&page=${page}&apiKey=${API_KEY}
     const topHead = {
       method: 'GET',
-      url: `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&pageSize=10&page=${page}&apiKey=${API_KEY}`,
+      url: `${proxyUrl}https://newsdata.io/api/1/news?country=${country}&category=${category}&language=en&page=${page}&apiKey=${API_KEY}`,
       headers: {
         accept: 'application/json',
       }
@@ -75,9 +78,9 @@ const BodyCenter = () => {
     const sendReq = async () => {
       try {
         let response = await axios.request(topHead);
-        console.log(response.data.articles);
+        console.log(response.data.results);
         setTotalPages(Math.ceil((response.data.totalResults) / 10));
-        setTopHeadData(response.data.articles)
+        setTopHeadData(response.data.results)
 
       } catch (err) {
         console.error(err);
@@ -112,11 +115,12 @@ const BodyCenter = () => {
           </Box>
         </Grid>
         {
-          topHeadData.filter((data) => data.urlToImage).map((item, index) => {
+          topHeadData.filter((data) => data.image_url
+          ).map((item, index) => {
             return (
               <Grid item xs={12} key={index}>
                 <Box key={index} display="flex" alignItems="center" justifyContent="center" m={3} p={1}>
-                  <ImgMediaCard key={index} img={item.urlToImage} title={item.title} url={item.url} date={item.publishedAt.slice(0, 10)} description={item.content} />
+                  <ImgMediaCard key={index} img={item.image_url} title={item.title} url={item.link} date={item.pubDate} description={item.content} />
                 </Box>
               </Grid>
             )
