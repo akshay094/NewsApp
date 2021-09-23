@@ -40,6 +40,8 @@ const BodyCenter = () => {
   let [totalPages, setTotalPages] = useState(10);
   const sortByArr = ['relevancy', 'popularity', 'publishedAt']
 
+  let [loading, setLoading] = useState(false);
+
   // const countryArr = { India: 'IN', USA: 'US', France: 'FR', 'United Kingdom': 'GB', Australia: 'AU', Japan: 'JP', Russia: 'RU' }
   // date format = YYYY/MM/DD
   // const headlineArr = ['top-headlines', 'everything']
@@ -65,8 +67,8 @@ const BodyCenter = () => {
   }
 
   useEffect(() => {
-    console.log(to);
-    console.log(from);
+    // console.log(to);
+    // console.log(from);
     const ever = {
       method: 'GET',
       url: ``,
@@ -86,6 +88,7 @@ const BodyCenter = () => {
     };
 
     const sendReq = async () => {
+      setLoading(true);
       try {
         let response = await axios.request(topHead);
         console.log(response.data.articles);
@@ -96,6 +99,7 @@ const BodyCenter = () => {
       } catch (err) {
         console.error(err);
       }
+      setLoading(false);
     }
     sendReq();
   }, [country, category, page]);
@@ -153,16 +157,17 @@ const BodyCenter = () => {
           </Box>
         </Grid>
         {
-          topHeadData.map((item, index) => {
-            return (
-              <Grid item xs={12} key={index}>
-                <Box key={index} display="flex" alignItems="center" justifyContent="center" m={3} p={1}>
-                  <ImgMediaCard key={index} img={item.media} title={item.title} url={item.link} date={item.published_date} description={item.summary} />
-                </Box>
-              </Grid>
+          loading ? <h1>Loading , Please Wait...</h1> :
+            topHeadData.map((item, index) => {
+              return (
+                <Grid item xs={12} key={index}>
+                  <Box key={index} display="flex" alignItems="center" justifyContent="center" m={3} p={1}>
+                    <ImgMediaCard key={index} img={item.media} title={item.title} url={item.link} date={item.published_date} description={item.summary} />
+                  </Box>
+                </Grid>
+              )
+            }
             )
-          }
-          )
         }
 
       </Grid>

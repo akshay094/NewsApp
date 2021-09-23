@@ -46,10 +46,3 @@ const Selector = ({ name, list, selection, value }) => {
 }
 
 export default Selector
-// {
-//   Array.isArray(list) ? list.map((item, index) => {
-//     return <MenuItem key={index} value={item}>{item}</MenuItem>
-//   }) : Object.keys(list).map((item, index) => {
-//     return <MenuItem key={index} value={list[item]}>{item}</MenuItem>
-//   })
-// }
